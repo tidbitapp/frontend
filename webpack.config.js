@@ -12,6 +12,10 @@ module.exports = {
     publicPath: "assets/"
   },
 
+  resolve: {
+    extensions: [".js", ".json", ".css"]
+  },
+
   module: {
     rules: [
       {
@@ -21,7 +25,34 @@ module.exports = {
       },
       {
         test: /\.html$/,
-        loader: "file-loader?name=[name].[ext]",
+        loaders: "file-loader?name=[name].[ext]",
+      },
+      {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+              sourceMap: true,
+              importLoaders: 1,
+              localIdentName: "[name]--[local]--[hash:base64:8]"
+            }
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: "postcss-loader",
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
       }
     ]
   }
