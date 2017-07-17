@@ -155,7 +155,7 @@ class SearchComponent extends React.Component {
           <span></span>
         )}
 
-        {this.state.summarizationDone ? (
+        {this.state.summarizationDone && this.props.isLoggedIn ? (
           <div style={{marginTop: '20px'}}>
             <Card style={{margin: '10px'}}>
               <CardTitle
