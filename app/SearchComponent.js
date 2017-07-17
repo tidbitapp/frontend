@@ -17,6 +17,7 @@ class SearchComponent extends React.Component {
       url: '',
       summarizerType: 'FREQUENCY',
       formValid: false,
+      summarizationProcessing: false,
       summarizationDone: false,
       summarizationMessage: '',
       summarizationData: {}
@@ -26,6 +27,12 @@ class SearchComponent extends React.Component {
 
   summarizeUrlContent() {
     const url = this.state.url;
+    this.setState(Object.assign(
+      this.state,
+      {
+        summarizationProcessing: true
+      }
+    ));
 
     fetch(config.baseApiUrl + '/summary', {
       method: 'POST',
@@ -51,6 +58,7 @@ class SearchComponent extends React.Component {
             this.setState(Object.assign(
               this.state,
               {
+                summarizationProcessing: false,
                 summarizationDone: true,
                 summarizationMessage: parsedJsonBody.message,
                 summarizationData: {}
@@ -63,6 +71,7 @@ class SearchComponent extends React.Component {
             this.setState(Object.assign(
               this.state,
               {
+                summarizationProcessing: false,
                 summarizationDone: true,
                 summarizationMessage: 'Success',
                 summarizationData: {
@@ -142,10 +151,10 @@ class SearchComponent extends React.Component {
         )}
         <Button
           icon='search'
-          disabled={!this.props.isLoggedIn}
+          disabled={!this.props.isLoggedIn || this.state.summarizationProcessing}
           raised accent
           onClick={this.summarizeUrlContent}>
-          Summarize
+          {this.state.summarizationProcessing ? ('Processing') : ('Summarize')}
         </Button>
         {this.state.summarizationDone ? (
           <span style={{marginLeft: '10px'}}>
