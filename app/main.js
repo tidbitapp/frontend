@@ -7,10 +7,11 @@ import {
   Link
 } from 'react-router-dom';
 
-import {createHashHistory} from 'history'
+import {createHashHistory} from 'history';
 import SignupComponent from 'SignupComponent';
 import LoginComponent from 'LoginComponent';
 import SearchComponent from 'SearchComponent';
+import UserHistoryComponent from 'UserHistoryComponent';
 
 import {
   AppBar,
@@ -87,6 +88,9 @@ class Main extends React.Component {
                 {this.state.isLoggedIn ?
                   (
                     <Navigation type='horizontal'>
+                      <Link to='/history'>
+                        <Button icon='alarm_on' label='History'/>
+                      </Link>
                       <Button icon='clear'
                               label='Logout'
                               onClick={this.logout}/>
@@ -110,6 +114,13 @@ class Main extends React.Component {
                 />
               )}/>
               <Route path='/signup' component={SignupComponent}/>
+              <Route path='/history' render={(props) => (
+                <UserHistoryComponent
+                  {...props}
+                  isLoggedIn={this.state.isLoggedIn}
+                  token={this.state.token}
+                />
+              )}/>
               <Route render={(props) => (
                 <SearchComponent
                   {...props}
