@@ -1,3 +1,3 @@
 export default {
-  baseApiUrl: 'http://localhost:8000'
+  baseApiUrl: 'http://104.236.104.171:8000'
 };
