@@ -113,10 +113,11 @@ class SignupComponent extends React.Component {
         <Input
           type='password'
           label='Password'
-          name='firstName'
+          name='password'
           value={this.state.password}
           onChange={this.onChangeHandler.bind(this, 'password')}/>
         <Button
+          id='signup'
           icon='done'
           disabled={!this.state.formValid || this.state.signupDone}
           raised accent
@@ -124,7 +125,7 @@ class SignupComponent extends React.Component {
           Sign Up
         </Button>
         {this.state.signupDone ? (
-          <span style={{
+          <span id='signupMessage' style={{
             marginLeft: '10px'
           }}>{this.state.signupMessage}</span>
         ) : (
