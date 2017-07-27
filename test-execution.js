@@ -7,7 +7,7 @@ const Mocha = require('mocha');
 const TEST_DIR = './test';
 
 const mocha = new Mocha({
-  timeout: '10000'
+  timeout: '1000000'
 });
 
 fs
