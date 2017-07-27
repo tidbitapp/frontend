@@ -13,24 +13,12 @@ const By = sw.By;
 const until = sw.until;
 
 
-describe('User Login', () => {
+describe('User Logout', () => {
 
   before(() => driver.get('http://localhost:8080/#/login'));
 
-  it('can see username and password inputs', async () => {
-    const usernameBox = await driver.findElement(
-      By.css("input[name='username']")
-    );
-    const passwordBox = await driver.findElement(
-      By.css("input[name='password']")
-    );
-
-    expect(usernameBox).to.not.be.undefined;
-    expect(passwordBox).to.not.be.undefined;
-  });
-
-  it('can log a user in', () => helpers.createThenDeleteUser(chai, async () => {
-
+  it('can log out a logged-in user',
+    () => helpers.createThenDeleteUser(chai, async () => {
       const usernameBox = await driver.findElement(
         By.css("input[name='username']")
       );
@@ -43,13 +31,19 @@ describe('User Login', () => {
 
       await usernameBox.sendKeys(config.fakeUsername);
       await passwordBox.sendKeys(config.fakePassword);
-      submitButton.click();
+      await submitButton.click();
 
       await driver.wait(until.elementLocated(By.css('#loginMessage')), 5000);
       const spanBox = await driver.findElement(
         By.css("#loginMessage")
       );
       expect(await spanBox.getText()).to.equal("Success");
+
+      await driver.wait(until.elementLocated(By.css("button[id='logout']")), 5000);
+      const logoutButton = await driver.findElement(
+        By.css("button[id='logout']")
+      );
+      logoutButton.click();
     })
   );
 

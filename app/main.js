@@ -91,7 +91,8 @@ class Main extends React.Component {
                       <Link to='/history'>
                         <Button icon='alarm_on' label='History'/>
                       </Link>
-                      <Button icon='clear'
+                      <Button id='logout'
+                              icon='clear'
                               label='Logout'
                               onClick={this.logout}/>
                     </Navigation>

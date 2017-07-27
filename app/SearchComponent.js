@@ -150,6 +150,7 @@ class SearchComponent extends React.Component {
           </div>
         )}
         <Button
+          id='summarize'
           icon='search'
           disabled={!this.props.isLoggedIn || this.state.summarizationProcessing}
           raised accent

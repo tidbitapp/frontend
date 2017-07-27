@@ -22,7 +22,7 @@ module.exports.canAuthenticate = async (chai, expectations) => {
     });
 };
 
-module.exports.createThenDeleteUser = async (chai, promiseExec, userObject) => {
+module.exports.createThenDeleteUser = (chai, promiseFunc, userObject) => {
   if (!userObject) {
     userObject = {
       username: config.fakeUsername,
@@ -32,12 +32,12 @@ module.exports.createThenDeleteUser = async (chai, promiseExec, userObject) => {
     }
   }
 
-  await chai
+  return chai
     .request(config.backendApiServerUrl)
     .post('/user')
     .send(userObject)
     .then(async () => {
-      await promiseExec;
+      await promiseFunc();
 
       const res = await chai
         .request(config.backendApiServerUrl)
@@ -52,9 +52,23 @@ module.exports.createThenDeleteUser = async (chai, promiseExec, userObject) => {
       return chai
         .request(config.backendApiServerUrl)
         .delete(`/user/${userId}`)
-        .set('Authorization', `Bearer ${jwtToken}`);
+        .set('Authorization', `Bearer ${jwtToken}`)
     })
-    .catch((err) => {
+    .catch(async (err) => {
+      const res = await chai
+        .request(config.backendApiServerUrl)
+        .post('/authenticate')
+        .send({
+          username: userObject.username,
+          password: userObject.password
+        });
+      const jwtToken = res.body.data;
+      const userId = jwtDecode(jwtToken)['user_id'];
+
+      await chai
+        .request(config.backendApiServerUrl)
+        .delete(`/user/${userId}`)
+        .set('Authorization', `Bearer ${jwtToken}`);
       throw err;
     });
 };
