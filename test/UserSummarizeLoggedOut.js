@@ -17,18 +17,16 @@ describe('Summarize (not logged in)', () => {
 
   before(() => driver.get('http://localhost:8080/#/'));
 
-  it('cannot summarize',
-    () => helpers.createThenDeleteUser(chai, async () => {
-      await driver.wait(until.elementLocated(By.css('#loggedOutMessage')), 5000);
-      const divBox = await driver.findElement(
-        By.css("#loggedOutMessage")
-      );
-      expect(
-        (await divBox.getText()).indexOf(
-          "You must be logged in to request a summary"
-        )
-      ).to.not.equal(-1);
-    })
-  );
+  it('cannot summarize', async () => {
+    await driver.wait(until.elementLocated(By.css('#loggedOutMessage')), 5000);
+    const divBox = await driver.findElement(
+      By.css("#loggedOutMessage")
+    );
+    expect(
+      (await divBox.getText()).indexOf(
+        "You must be logged in to request a summary"
+      )
+    ).to.not.equal(-1);
+  });
 
 });

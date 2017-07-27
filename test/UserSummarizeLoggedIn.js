@@ -13,12 +13,12 @@ const By = sw.By;
 const until = sw.until;
 
 
-describe('User Logout', () => {
+describe('User Summarize (logged in)', () => {
 
   before(() => driver.get('http://localhost:8080/#/login'));
 
-  it('can log out a logged-in user',
-    () => helpers.createThenDeleteUser(chai, async () => {
+  it('can summarize', () => helpers.createThenDeleteUser(chai, async () => {
+
       const usernameBox = await driver.findElement(
         By.css("input[name='username']")
       );
@@ -38,6 +38,28 @@ describe('User Logout', () => {
         By.css("#loginMessage")
       );
       expect(await spanBox.getText()).to.equal("Success");
+
+      await driver.get('http://localhost:8080/#/');
+
+      const urlBox = await driver.findElement(
+        By.css("input[name='url']")
+      );
+      const dropdownBox = await driver.findElement(
+        By.css("input[name='algorithm']")
+      );
+      const summarizeButton = await driver.findElement(
+        By.css("button#summarize")
+      );
+
+      await urlBox.sendKeys("https://github.com");
+      await dropdownBox.sendKeys("LUHN");
+      await summarizeButton.click();
+
+      await driver.wait(until.elementLocated(By.css('#summarizeMessage')), 5000);
+      const summarizeMessageBox = await driver.findElement(
+        By.css("#summarizeMessage")
+      );
+      expect(await summarizeMessageBox.getText()).to.equal("Success");
 
       await driver.wait(until.elementLocated(By.css("button[id='logout']")), 5000);
       const logoutButton = await driver.findElement(

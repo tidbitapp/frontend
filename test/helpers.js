@@ -49,26 +49,12 @@ module.exports.createThenDeleteUser = (chai, promiseFunc, userObject) => {
       const jwtToken = res.body.data;
       const userId = jwtDecode(jwtToken)['user_id'];
 
-      return chai
+      await chai
         .request(config.backendApiServerUrl)
         .delete(`/user/${userId}`)
         .set('Authorization', `Bearer ${jwtToken}`)
     })
     .catch(async (err) => {
-      const res = await chai
-        .request(config.backendApiServerUrl)
-        .post('/authenticate')
-        .send({
-          username: userObject.username,
-          password: userObject.password
-        });
-      const jwtToken = res.body.data;
-      const userId = jwtDecode(jwtToken)['user_id'];
-
-      await chai
-        .request(config.backendApiServerUrl)
-        .delete(`/user/${userId}`)
-        .set('Authorization', `Bearer ${jwtToken}`);
       throw err;
     });
 };

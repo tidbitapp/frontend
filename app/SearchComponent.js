@@ -125,6 +125,7 @@ class SearchComponent extends React.Component {
           value={this.state.url}
           onChange={this.onChangeHandler.bind(this, 'url')}/>
         <Dropdown
+          name='algorithm'
           auto
           onChange={this.onChangeHandler.bind(this, 'summarizerType')}
           source={[{
@@ -158,7 +159,7 @@ class SearchComponent extends React.Component {
           {this.state.summarizationProcessing ? ('Processing') : ('Summarize')}
         </Button>
         {this.state.summarizationDone ? (
-          <span style={{marginLeft: '10px'}}>
+          <span id="summarizeMessage" style={{marginLeft: '10px'}}>
             {this.state.summarizationMessage}
           </span>
         ) : (

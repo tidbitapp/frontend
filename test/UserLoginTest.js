@@ -43,13 +43,19 @@ describe('User Login', () => {
 
       await usernameBox.sendKeys(config.fakeUsername);
       await passwordBox.sendKeys(config.fakePassword);
-      submitButton.click();
+      await submitButton.click();
 
       await driver.wait(until.elementLocated(By.css('#loginMessage')), 5000);
       const spanBox = await driver.findElement(
         By.css("#loginMessage")
       );
       expect(await spanBox.getText()).to.equal("Success");
+
+      await driver.wait(until.elementLocated(By.css("button[id='logout']")), 5000);
+      const logoutButton = await driver.findElement(
+        By.css("button[id='logout']")
+      );
+      await logoutButton.click();
     })
   );
 
