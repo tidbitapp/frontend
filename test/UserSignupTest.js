@@ -1,17 +1,16 @@
-const sw = require('selenium-webdriver');
-const driver = new sw.Builder()
-  .withCapabilities(sw.Capabilities.safari())
-  .build();
-
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
+
 const expect = chai.expect;
-const By = sw.By;
-const until = sw.until;
 
 const config = require('./config');
 const helpers = require('./helpers');
+
+const sw = require('selenium-webdriver');
+const driver = config.driver;
+const By = sw.By;
+const until = sw.until;
 
 
 describe('User Registration', () => {

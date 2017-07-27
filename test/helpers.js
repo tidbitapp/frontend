@@ -34,11 +34,18 @@ module.exports.createThenDeleteUser = async (chai, promiseExec, userObject) => {
 
   await chai
     .request(config.backendApiServerUrl)
-    .post('/user/')
+    .post('/user')
     .send(userObject)
-    .then(async (res) => {
+    .then(async () => {
       await promiseExec;
 
+      const res = await chai
+        .request(config.backendApiServerUrl)
+        .post('/authenticate')
+        .send({
+          username: userObject.username,
+          password: userObject.password
+        });
       const jwtToken = res.body.data;
       const userId = jwtDecode(jwtToken)['user_id'];
 

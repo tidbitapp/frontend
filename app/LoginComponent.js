@@ -99,10 +99,11 @@ class LoginComponent extends React.Component {
         <Input
           type='password'
           label='Password'
-          name='firstName'
+          name='password'
           value={this.state.password}
           onChange={this.onChangeHandler.bind(this, 'password')}/>
         <Button
+          id='login'
           icon='done'
           disabled={!this.state.formValid || this.state.loginDone}
           raised accent
@@ -110,7 +111,7 @@ class LoginComponent extends React.Component {
           Log In
         </Button>
         {this.state.loginDone ? (
-          <span style={{
+          <span id='loginMessage' style={{
             marginLeft: '10px'
           }}>{this.state.loginMessage}</span>
         ) : (
