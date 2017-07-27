@@ -141,7 +141,7 @@ class SearchComponent extends React.Component {
         />
 
         {this.props.isLoggedIn ? '' : (
-          <div style={{marginTop: '10px', marginBottom: '20px'}}>
+          <div id='loggedOutMessage' style={{marginTop: '10px', marginBottom: '20px'}}>
             <FontIcon
               value='announcement'
               style={{marginRight: '10px'}}/>
