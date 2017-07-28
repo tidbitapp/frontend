@@ -1,0 +1,9 @@
+FROM python:3.6.0
+MAINTAINER Alastair Paragas <alastairparagas@gmail.com>
+
+ADD index.html /tidbit/
+ADD ./lib /tidbit/lib/
+
+RUN npm install -g http-server
+
+CMD ["http-server", "-p 80"]
