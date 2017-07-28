@@ -7,5 +7,3 @@ services:
       dockerfile: frontend_docker
     ports:
       - "80:80"
-    env_file:
-      - backend.env
